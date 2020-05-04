@@ -1,12 +1,6 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
-#include <SDL2/SDL_timer.h>
 #include "simulator.h"
-#include "GUI.cpp"
 
-int main()
-{
-
+void initWindow() {
     // retutns zero on success else non-zero
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("error initializing SDL: %s\n", SDL_GetError());
