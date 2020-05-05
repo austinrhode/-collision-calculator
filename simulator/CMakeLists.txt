@@ -23,6 +23,9 @@ SUBDIRLIST(SUBDIRS "${CMAKE_CURRENT_SOURCE_DIR}/src")
 add_executable(sim src/main.cpp)
 target_link_libraries(sim PUBLIC ${SDL2_LIBRARIES} -lSDL2_image)
 
+add_executable(SDLdemo src/demo.cpp)
+target_link_libraries(SDLdemo PUBLIC ${SDL2_LIBRARIES} -lSDL2_image)
+
 FOREACH(subdir ${SUBDIRS})
   file(GLOB _H "src/${subdir}/*.hpp")
   file(GLOB _C "src/${subdir}/*.cpp")
