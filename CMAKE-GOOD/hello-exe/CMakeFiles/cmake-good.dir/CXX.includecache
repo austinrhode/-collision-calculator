@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/hello-exe/main.cpp
+iostream
+-
+say-hello/hello.hpp
+-
+
+say-hello/src/say-hello/hello.hpp
+
