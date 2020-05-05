@@ -10,6 +10,8 @@
 // for using SDL_Delay() functions
 #include <SDL2/SDL_timer.h>
 
+#include <model/vect.hpp>
+
 namespace GUI {
   void initWindow();
 }
