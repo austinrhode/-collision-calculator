@@ -1,0 +1,1 @@
+clang++    -rdynamic CMakeFiles/SDLdemo.dir/demo.cpp.o  -o SDLdemo -lSDL2 -lSDL2_image 

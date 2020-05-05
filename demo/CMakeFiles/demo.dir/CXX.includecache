@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/garnet/Desktop/Programming/-collision-calculator/demo/demo.cpp
+SDL2/SDL.h
+-
+SDL2/SDL_image.h
+-
+SDL2/SDL_timer.h
+-
+
