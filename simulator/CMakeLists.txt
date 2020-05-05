@@ -7,16 +7,22 @@ include_directories(${SDL2_INCLUDE_DIRS})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CMAKE_CXX_COMPILER clang++)
 
+file(GLOB VIEW_H "src/view/*.hpp")
+file(GLOB VIEW_C "src/view/*.cpp")
+
+file(GLOB MODEL_H "src/model/*.hpp")
+file(GLOB MODEL_C "src/model/*.cpp")
+
 add_library(
   model
-  src/model/vect.hpp
-  src/model/vect.cpp
+  ${MODEL_H}
+  ${MODEL_C}
 )
 
 add_library(
   view
-  src/view/GUI.hpp
-  src/view/GUI.cpp
+  ${VIEW_H}
+  ${VIEW_C}
 )
 
 target_include_directories(view PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
