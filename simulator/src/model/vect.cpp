@@ -3,30 +3,29 @@
 
 using namespace std;
 
-  vect::vect(int xVal, int yVal){
-    this->xVal = xVal;
-    this->yVal = yVal;
+  pbVector::pbVector(double x, double y){
+    this->x = x;
+    this->y = y;
   }
 
-  vect::vect(){
-    this->xVal = 0;
-    this->yVal = 0;
+  pbVector::pbVector(){
+    this->x = 0;
+    this->y = 0;
   }
 
-  vect vect::operator + (vect const &obj) {
-      vect result = vect(this->xVal + obj.xVal, this->yVal + obj.yVal);
-      return result;
-  }
+  pbVector pbVector::operator +(pbVector &obj) {
+    return pbVector(this->x + obj.x, this->y + obj.y);
+}
 
-  ostream& operator<<(ostream& os, const vect& obj)
+  ostream& operator<<(ostream& os, const pbVector& obj)
 {
     // print in terms of public interface of S
     // (else, deckare this a friend function inside S)
-    os << "<" << obj.xVal << ", " << obj.yVal << ">";
+    os << "<" << obj.x << ", " << obj.y << ">";
     return os;
 }
 
-  void vect::setVector(int x, int y){
-    this->xVal = x;
-    this->yVal = y;
+  void pbVector::setVector(double x, double y){
+    this->x = x;
+    this->y = y;
   }

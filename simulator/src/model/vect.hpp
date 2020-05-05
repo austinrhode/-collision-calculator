@@ -3,15 +3,17 @@
 #include <iostream>
 #include <ostream>
 
-class vect {
+
+class pbVector {
 public:
-  int xVal, yVal;
-  vect(int xVal, int yVal);
-  vect();
-  vect operator + (vect const &obj);
-  vect operator - (vect const &obj);
-  void setVector(int x, int y);
-  friend std::ostream& operator<<(std::ostream& os, const vect& obj);
+  double x;
+  double y;
+  pbVector(double x, double y);
+  pbVector();
+  pbVector operator +(pbVector &obj);
+  pbVector operator -(pbVector &obj);
+  void setVector(double x, double y);
+  friend std::ostream& operator<<(std::ostream& os, const pbVector& obj);
 };
 
 #endif

@@ -1,13 +1,16 @@
 #include <iostream>
 #include <model/vect.hpp>
 using namespace std;
-int main(){
-  vect x;
-  x.setVector(2, 6);
-  vect y;
-  y.setVector(2, 7);
-  vect sumRes;
-  sumRes = x + y;
-  cout << "The resultant sum vector is: " << sumRes <<endl;
-  return 0;
+
+int main(int argc, char **argv) {
+
+    pbVector v1 = pbVector(1, 2);
+    pbVector v2 = pbVector(2, 3);
+
+    pbVector v3 = v1 + v2;
+    pbVector v4 = v3 + v1;
+
+    cout << v4.x << v4.y;
+
+    return 0;
 }
