@@ -26,6 +26,8 @@ target_link_libraries(sim PUBLIC ${SDL2_LIBRARIES} -lSDL2_image)
 add_executable(SDLdemo src/demo.cpp)
 target_link_libraries(SDLdemo PUBLIC ${SDL2_LIBRARIES} -lSDL2_image)
 
+add_executable(log src/test_logger.cpp)
+
 FOREACH(subdir ${SUBDIRS})
   file(GLOB _H "src/${subdir}/*.hpp")
   file(GLOB _C "src/${subdir}/*.cpp")
@@ -38,4 +40,6 @@ FOREACH(subdir ${SUBDIRS})
 
   target_include_directories(${subdir} PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}/src")
   target_link_libraries(sim PRIVATE ${subdir})
+  target_link_libraries(log PRIVATE ${subdir})
+
 ENDFOREACH()
