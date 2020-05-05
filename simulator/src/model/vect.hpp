@@ -1,8 +1,19 @@
 #ifndef VECT_H
 #define VECT_H
+#include <iostream>
+#include <ostream>
 
-namespace VECT {
-  
-}
+
+class pbVector {
+public:
+  double x;
+  double y;
+  pbVector(double x, double y);
+  pbVector();
+  pbVector operator +(pbVector &obj);
+  pbVector operator -(pbVector &obj);
+  void setVector(double x, double y);
+  friend std::ostream& operator<<(std::ostream& os, const pbVector& obj);
+};
 
 #endif
