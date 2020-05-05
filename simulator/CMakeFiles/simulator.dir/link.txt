@@ -1,0 +1,1 @@
+clang++    -rdynamic CMakeFiles/simulator.dir/src/main.cpp.o  -o . libmodel.a libview.a 

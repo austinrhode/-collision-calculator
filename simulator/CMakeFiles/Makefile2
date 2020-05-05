@@ -60,39 +60,114 @@ CMAKE_SOURCE_DIR = /home/garnet/Desktop/Programming/-collision-calculator/simula
 CMAKE_BINARY_DIR = /home/garnet/Desktop/Programming/-collision-calculator/simulator
 
 #=============================================================================
-# Target rules for target CMakeFiles/hello.dir
+# Target rules for target CMakeFiles/sim.dir
 
 # All Build rule for target.
-CMakeFiles/hello.dir/all:
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/depend
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles --progress-num=1,2 "Built target hello"
-.PHONY : CMakeFiles/hello.dir/all
+CMakeFiles/sim.dir/all: CMakeFiles/model.dir/all
+CMakeFiles/sim.dir/all: CMakeFiles/view.dir/all
+	$(MAKE) -f CMakeFiles/sim.dir/build.make CMakeFiles/sim.dir/depend
+	$(MAKE) -f CMakeFiles/sim.dir/build.make CMakeFiles/sim.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles --progress-num=3,4 "Built target sim"
+.PHONY : CMakeFiles/sim.dir/all
 
 # Include target in all.
-all: CMakeFiles/hello.dir/all
+all: CMakeFiles/sim.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/hello.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/hello.dir/all
+CMakeFiles/sim.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 6
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/sim.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 0
-.PHONY : CMakeFiles/hello.dir/rule
+.PHONY : CMakeFiles/sim.dir/rule
 
 # Convenience name for target.
-hello: CMakeFiles/hello.dir/rule
+sim: CMakeFiles/sim.dir/rule
 
-.PHONY : hello
-
-# clean rule for target.
-CMakeFiles/hello.dir/clean:
-	$(MAKE) -f CMakeFiles/hello.dir/build.make CMakeFiles/hello.dir/clean
-.PHONY : CMakeFiles/hello.dir/clean
+.PHONY : sim
 
 # clean rule for target.
-clean: CMakeFiles/hello.dir/clean
+CMakeFiles/sim.dir/clean:
+	$(MAKE) -f CMakeFiles/sim.dir/build.make CMakeFiles/sim.dir/clean
+.PHONY : CMakeFiles/sim.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/sim.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/model.dir
+
+# All Build rule for target.
+CMakeFiles/model.dir/all:
+	$(MAKE) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/depend
+	$(MAKE) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles --progress-num=1,2 "Built target model"
+.PHONY : CMakeFiles/model.dir/all
+
+# Include target in all.
+all: CMakeFiles/model.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/model.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/model.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 0
+.PHONY : CMakeFiles/model.dir/rule
+
+# Convenience name for target.
+model: CMakeFiles/model.dir/rule
+
+.PHONY : model
+
+# clean rule for target.
+CMakeFiles/model.dir/clean:
+	$(MAKE) -f CMakeFiles/model.dir/build.make CMakeFiles/model.dir/clean
+.PHONY : CMakeFiles/model.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/model.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/view.dir
+
+# All Build rule for target.
+CMakeFiles/view.dir/all:
+	$(MAKE) -f CMakeFiles/view.dir/build.make CMakeFiles/view.dir/depend
+	$(MAKE) -f CMakeFiles/view.dir/build.make CMakeFiles/view.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles --progress-num=5,6 "Built target view"
+.PHONY : CMakeFiles/view.dir/all
+
+# Include target in all.
+all: CMakeFiles/view.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/view.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/view.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles 0
+.PHONY : CMakeFiles/view.dir/rule
+
+# Convenience name for target.
+view: CMakeFiles/view.dir/rule
+
+.PHONY : view
+
+# clean rule for target.
+CMakeFiles/view.dir/clean:
+	$(MAKE) -f CMakeFiles/view.dir/build.make CMakeFiles/view.dir/clean
+.PHONY : CMakeFiles/view.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/view.dir/clean
 
 .PHONY : clean
 

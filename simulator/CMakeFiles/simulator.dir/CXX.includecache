@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/garnet/Desktop/Programming/-collision-calculator/simulator/src/main.cpp
+iostream
+-
+model/GUI.hpp
+-
+
+simulator/src/model/GUI.hpp
+
