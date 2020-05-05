@@ -1,5 +1,0 @@
-/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles/edit_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles/sim.dir
-/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles/rebuild_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles/model.dir
-/home/garnet/Desktop/Programming/-collision-calculator/simulator/CMakeFiles/view.dir

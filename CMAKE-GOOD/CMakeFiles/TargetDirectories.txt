@@ -1,8 +1,0 @@
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/CMakeFiles/rebuild_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/CMakeFiles/edit_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/say-hello/CMakeFiles/rebuild_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/say-hello/CMakeFiles/say-hello.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/say-hello/CMakeFiles/edit_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/hello-exe/CMakeFiles/rebuild_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/hello-exe/CMakeFiles/cmake-good.dir
-/home/garnet/Desktop/Programming/-collision-calculator/CMAKE-GOOD/hello-exe/CMakeFiles/edit_cache.dir

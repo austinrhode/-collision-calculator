@@ -1,3 +1,0 @@
-/home/garnet/Desktop/Programming/-collision-calculator/demo/CMakeFiles/rebuild_cache.dir
-/home/garnet/Desktop/Programming/-collision-calculator/demo/CMakeFiles/SDLdemo.dir
-/home/garnet/Desktop/Programming/-collision-calculator/demo/CMakeFiles/edit_cache.dir

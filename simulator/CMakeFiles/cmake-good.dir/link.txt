@@ -1,1 +1,0 @@
-clang++    -rdynamic CMakeFiles/cmake-good.dir/src/main.cpp.o  -o ../cmake-good libmodel.a libview.a 
