@@ -9,6 +9,10 @@ int main(int argc, char **argv) {
 
     pbVector v3 = v1 + v2;
     pbVector v4 = v3 + v1;
+    double dot = v1.dot_product(v2);
+
+    cout << dot << endl;
+
 
     cout << v4.x << v4.y;
 
