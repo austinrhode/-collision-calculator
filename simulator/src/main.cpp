@@ -6,6 +6,6 @@ using namespace std;
 
 int main()
 {
-    cout << "hey!" << endl;
-    GUI::initWindow();
+    GUI myGUI = GUI();
+    myGUI.initWindow(640,480);
 }

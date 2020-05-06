@@ -6,8 +6,12 @@
 #include <SDL2/SDL_timer.h>
 #include <model/vect.hpp>
 
-namespace GUI {
-  void initWindow();
-}
+class GUI {
+public:
+  void initWindow(const int WIDTH, const int HEIGHT);
+private:
+  float liveTime = 0;
+  void drawPixel(SDL_Renderer* m_window_renderer, int x, int y, int size, uint32_t color);
+};
 
 #endif
