@@ -6,6 +6,6 @@ using namespace std;
 
 int main()
 {
-    GUI myGUI = GUI();
-    myGUI.initWindow(640,480);
+    GUI myGUI = GUI(640,480,3);
+    myGUI.initWindow();
 }

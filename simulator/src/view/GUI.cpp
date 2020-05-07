@@ -18,11 +18,15 @@ void GUI::drawRect(float x, float y, float width, float height, uint32_t color, 
   SDL_RenderFillRect(rend, &rect);
 }
 
-void GUI::drawWave() {
-
+void GUI::drawWave(wave& w) {
+  int dx = RESOLUTION;
+  for(int i = 0; i < WIDTH/dx; i++) {
+    float height = w.amplitude*sin((i/w.omega*dx)+liveTime)+w.phi;
+    drawRect(float(i*dx),HEIGHT-height,dx,float(HEIGHT-height),w.color, 100);
+  };
 }
 
-void GUI::initWindow(const int WIDTH, const int HEIGHT) {
+void GUI::initWindow() {
 
       // retutns zero on success else non-zero
       if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -64,19 +68,28 @@ void GUI::initWindow(const int WIDTH, const int HEIGHT) {
 
           }
 
+          // Events mangement
+          while (SDL_PollEvent(&event)) {
+              switch (event.type) {
+
+              case SDL_QUIT:
+                  // handling of close button
+                  close = true;
+                  break;
+              }
+
+          }
+
           // clears the screen
+          SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
           SDL_RenderClear(rend);
           //SDL_RenderCopy(rend, tex, NULL, 0);
 
-          int dx = 20;
-          for(int i = 0; i < WIDTH/dx; i++) {
-            float height = 15*sin((i)+liveTime)+125;
-            drawRect(float(i*dx),HEIGHT-height,dx,float(HEIGHT-height),0x36ffe7, 100);
-          };
-          for(int i = 0; i < WIDTH/dx; i++) {
-            float height = 7*sin(((i/2)+20)+liveTime)+100;
-            drawRect(float(i*dx),HEIGHT-height,dx,float(HEIGHT-height),0x007067, 150);
-          };
+          wave w1 = wave(15, 10, 125, 0x36ffe7, 100);
+          wave w2 = wave(5, 3, 125, 0x36ffe7, 125);
+          drawWave(w1);
+          drawWave(w2);
+
           // triggers the double buffers
           // for multiple rendering
           SDL_RenderPresent(rend);
