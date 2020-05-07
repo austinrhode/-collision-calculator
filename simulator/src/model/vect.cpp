@@ -1,9 +1,11 @@
 #include "vect.hpp"
-#include "logger/log.hpp"
+#include <logger/log.hpp>
 #include <string>
 
 
 using namespace std;
+
+log logger;
 
   pbVector::pbVector(double x, double y){
     this->x = x;
@@ -16,7 +18,9 @@ using namespace std;
   }
 
   pbVector pbVector::operator +(pbVector &obj) {
-    return pbVector(this->x + obj.x, this->y + obj.y);
+    pbVector result = pbVector(this->x + obj.x, this->y + obj.y);
+    //logger.log_vector_operation(*this, obj, "+", result);
+    return result;
 }
 
 pbVector pbVector::operator -(pbVector &obj) {
