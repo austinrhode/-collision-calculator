@@ -18,12 +18,16 @@ void GUI::drawRect(float x, float y, float width, float height, uint32_t color, 
   SDL_RenderFillRect(rend, &rect);
 }
 
-void GUI::drawWave(wave& w) {
-  int dx = RESOLUTION;
-  for(int i = 0; i < WIDTH/dx; i++) {
-    float height = w.amplitude*sin((i/w.omega*dx)+liveTime)+w.phi;
-    drawRect(float(i*dx),HEIGHT-height,dx,float(HEIGHT-height),w.color, 100);
-  };
+void GUI::drawWaves() {
+  for(wave w : waveList) {
+    int dx = RESOLUTION;
+    for(int i = 0; i < WIDTH/dx; i++) {
+      float dist = (w.headPosition-i);
+      float decay = dist > 0 ? -pow(w.decayBase, -dist/w.decayRate) : -pow(w.decayBase, dist/w.decayRate);
+      float height = decay*w.amplitude*sin((i/w.omega*dx)+w.headPosition)+w.phi;
+      drawRect(float(i*dx),HEIGHT-height,dx,float(HEIGHT-height),w.color, 100);
+    };
+  }
 }
 
 void GUI::initWindow() {
@@ -41,18 +45,10 @@ void GUI::initWindow() {
 
       SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
 
-      // controls annimation loop
-      bool close = false;
-
       auto deltaTime = std::chrono::high_resolution_clock::now();
 
       // annimation loop
-      while (!close) {
-
-          auto newDelta = std::chrono::high_resolution_clock::now();
-          auto difference = std::chrono::duration_cast<std::chrono::microseconds>(newDelta - deltaTime);
-          deltaTime = newDelta;
-          liveTime += difference.count()/float(1000000);
+      while (!closed) {
 
           SDL_Event event;
 
@@ -62,7 +58,7 @@ void GUI::initWindow() {
 
               case SDL_QUIT:
                   // handling of close button
-                  close = true;
+                  closed = true;
                   break;
               }
 
@@ -74,7 +70,7 @@ void GUI::initWindow() {
 
               case SDL_QUIT:
                   // handling of close button
-                  close = true;
+                  closed = true;
                   break;
               }
 
@@ -85,10 +81,7 @@ void GUI::initWindow() {
           SDL_RenderClear(rend);
           //SDL_RenderCopy(rend, tex, NULL, 0);
 
-          wave w1 = wave(15, 10, 125, 0x36ffe7, 100);
-          wave w2 = wave(5, 3, 125, 0x36ffe7, 125);
-          drawWave(w1);
-          drawWave(w2);
+          drawWaves();
 
           // triggers the double buffers
           // for multiple rendering
@@ -98,6 +91,8 @@ void GUI::initWindow() {
           //SDL_Delay(1000 / 60);
           SDL_Delay(1000 / 10);
       }
+
+      std::cout << this->closed << std::endl;
 
       //SDL_DestroyTexture(tex);
       SDL_DestroyRenderer(rend);
