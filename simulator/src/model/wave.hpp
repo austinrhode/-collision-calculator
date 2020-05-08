@@ -20,6 +20,7 @@ public:
   float headPosition;
   const float amplitude;
   const float omega;
+  float calculate_height(float);
 };
 
 #endif
