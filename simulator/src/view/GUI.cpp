@@ -63,6 +63,9 @@ void GUI::initWindow() {
       SDL_Surface* boat_surface = IMG_Load("./img/boats.png");
       boat_texture = SDL_CreateTextureFromSurface(rend, boat_surface);
 
+      SDL_Surface* bg_surface = IMG_Load("./img/bg2.png");
+      SDL_Texture* bg_texture = SDL_CreateTextureFromSurface(rend, bg_surface);
+
       SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
       // annimation loop
       while (WAVE_CONT->running) {
@@ -90,6 +93,7 @@ void GUI::initWindow() {
           // clears the screen
           SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
           SDL_RenderClear(rend);
+          SDL_RenderCopy(rend, bg_texture, NULL, 0);
           drawWaves();
           drawBoats();
 

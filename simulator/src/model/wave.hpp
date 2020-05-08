@@ -14,12 +14,13 @@ public:
     decayBase(decayBase),
     headPosition(headPosition)
     { }
-  const float velocity;
-  const float decayBase;
-  const float decayRate;
+  float velocity;
+  float decayBase;
+  float decayRate;
   float headPosition;
-  const float amplitude;
-  const float omega;
+  float amplitude;
+  float omega;
+  float calculate_height(float);
 };
 
 #endif
