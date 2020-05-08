@@ -19,14 +19,20 @@ void GUI::drawRect(float x, float y, float width, float height, uint32_t color, 
 }
 
 void GUI::drawWaves() {
-  for(wave w : waveList) {
-    int dx = RESOLUTION;
-    for(int i = 0; i < WIDTH/dx; i++) {
+
+  uint32_t color = 0x36ffe7;
+  int alpha = 150;
+  int phi = 200;
+
+  int dx = RESOLUTION;
+  for(int i = 0; i < WIDTH/dx; i++) {
+    float height = 0;
+    for(wave w : waveList) {
       float dist = (w.headPosition-i);
       float decay = dist > 0 ? -pow(w.decayBase, -dist/w.decayRate) : -pow(w.decayBase, dist/w.decayRate);
-      float height = decay*w.amplitude*sin((i/w.omega*dx)+w.headPosition)+w.phi;
-      drawRect(float(i*dx),HEIGHT-height,dx,float(HEIGHT-height),w.color, 100);
+      height += decay*w.amplitude*sin((i/w.omega*dx)+w.headPosition);
     };
+    drawRect(float(i*dx),HEIGHT-height-phi,dx,HEIGHT-height, color, alpha);
   }
 }
 
