@@ -22,9 +22,11 @@ public:
   const int WIDTH;
   const int RESOLUTION;
 private:
+  SDL_Texture* boat_texture;
   SDL_Renderer* rend;
   void drawRect(float x, float y, float width, float height, uint32_t color, uint8_t alpha);
   void drawWaves();
+  void drawBoats();
 };
 
 #endif

@@ -1,6 +1,5 @@
 #include "GUI.hpp"
 #include <model/wave.hpp>
-#include <model/wave.cpp>
 #include <chrono>
 #include <iostream>
 #include <cmath>
@@ -22,7 +21,6 @@ void GUI::drawRect(float x, float y, float width, float height, uint32_t color, 
 }
 
 void GUI::drawWaves() {
-
   uint32_t color = 0x36ffe7;
   int alpha = 150;
   int phi = 200;
@@ -30,11 +28,23 @@ void GUI::drawWaves() {
   for(int i = 0; i < WIDTH/RESOLUTION; i++) {
     float height = 0;
     for(wave w : WAVE_CONT->waveList) {
-      float dist = (w.headPosition-i);
-      float decay = dist > 0 ? -pow(w.decayBase, -dist/w.decayRate) : -pow(w.decayBase, dist/w.decayRate);
-      height += decay*w.amplitude*sin((i/w.omega*RESOLUTION)+w.headPosition);
+      height += w.calculate_height(i);
     };
     drawRect(float(i*RESOLUTION),HEIGHT-height-phi,RESOLUTION,HEIGHT-height, color, alpha);
+  }
+}
+
+void GUI::drawBoats() {
+  for(boat b : WAVE_CONT->boatList) {
+    SDL_Rect boat_rect;
+    boat_rect.x = b.xPos;
+    boat_rect.y = b.yPos;
+    boat_rect.w = b.width;
+    boat_rect.h = b.height;
+    SDL_Rect* p_boat_rect = &boat_rect;
+    SDL_Point center = {32,16};
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    SDL_RenderCopyEx(rend, boat_texture, NULL, p_boat_rect, b.angle, &center, flip);
   }
 }
 
@@ -49,78 +59,43 @@ void GUI::initWindow() {
 
       Uint32 render_flags = SDL_RENDERER_ACCELERATED;
       this->rend = SDL_CreateRenderer(win, -1, render_flags);
+
       SDL_Surface* boat_surface = IMG_Load("./img/boats.png");
-      SDL_Texture* boat_texture = SDL_CreateTextureFromSurface(rend, boat_surface);
-      //SDL_Surface* surface = IMG_Load("./img/bg.png");
-      //SDL_Texture* tex = SDL_CreateTextureFromSurface(rend, surface);
+      boat_texture = SDL_CreateTextureFromSurface(rend, boat_surface);
 
       SDL_SetRenderDrawBlendMode(rend, SDL_BLENDMODE_BLEND);
-
-      auto deltaTime = std::chrono::high_resolution_clock::now();
-
       // annimation loop
       while (WAVE_CONT->running) {
-
           SDL_Event event;
-
           // Events mangement
           while (SDL_PollEvent(&event)) {
               switch (event.type) {
-
               case SDL_QUIT:
                   // handling of close button
                   WAVE_CONT->running = false;
                   break;
               }
-
           }
 
           // Events mangement
           while (SDL_PollEvent(&event)) {
               switch (event.type) {
-
               case SDL_QUIT:
                   // handling of close button
                   WAVE_CONT->running = false;
                   break;
               }
-
           }
 
           // clears the screen
           SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
           SDL_RenderClear(rend);
-
-          SDL_Rect boat_rect;
-
-          float height = 0;
-          float height_front = 0;
-          float height_back = 0;
-          for (int i = 0; i < WAVE_CONT->waveList.size(); i++){
-            height += WAVE_CONT->waveList[i].calculate_height(320 / RESOLUTION);
-            height_front += WAVE_CONT->waveList[i].calculate_height((320 + 16) / RESOLUTION);
-            height_back += WAVE_CONT->waveList[i].calculate_height((320 - 16) / RESOLUTION);
-          }
-
-          boat_rect.x = 320;
-          boat_rect.y = height + 250;
-
-          boat_rect.w = 32;
-          boat_rect.h = 32;
-
-          const SDL_Rect* p_boat_rect = &boat_rect;
-          const SDL_Point center = {32,16};
-          const SDL_RendererFlip flip = SDL_FLIP_NONE;
-          double angle = asin((height_front - height_back) / boat_rect.w) * (180 / acos(-1));
-
-          SDL_RenderCopyEx(rend, boat_texture, NULL, p_boat_rect, angle, &center, flip);
-
           drawWaves();
+          drawBoats();
 
           // triggers the double buffers
           // for multiple rendering
           SDL_RenderPresent(rend);
-
           // calculates to 60 fps
           //SDL_Delay(1000 / 60);
           SDL_Delay(1000 / 60);
@@ -129,4 +104,5 @@ void GUI::initWindow() {
       //SDL_DestroyTexture(tex);
       SDL_DestroyRenderer(rend);
       SDL_DestroyWindow(win);
+
 }
