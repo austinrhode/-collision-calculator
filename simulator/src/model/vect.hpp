@@ -12,7 +12,8 @@ public:
   pbVector();
   pbVector operator +(pbVector &obj);
   pbVector operator -(pbVector &obj);
-  void setVector(double x, double y);
+  double dot_product(pbVector &obj);
+  void set_vector(double x, double y);
   friend std::ostream& operator<<(std::ostream& os, const pbVector& obj);
 };
 
