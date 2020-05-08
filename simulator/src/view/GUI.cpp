@@ -2,6 +2,7 @@
 #include <chrono>
 #include <iostream>
 #include <cmath>
+#include <model/waveController.hpp>
 
 void GUI::drawRect(float x, float y, float width, float height, uint32_t color, uint8_t alpha) {
   SDL_Rect rect;
@@ -27,7 +28,7 @@ void GUI::drawWaves() {
   int dx = RESOLUTION;
   for(int i = 0; i < WIDTH/dx; i++) {
     float height = 0;
-    for(wave w : waveList) {
+    for(wave w : WAVE_CONT->waveList) {
       float dist = (w.headPosition-i);
       float decay = dist > 0 ? -pow(w.decayBase, -dist/w.decayRate) : -pow(w.decayBase, dist/w.decayRate);
       height += decay*w.amplitude*sin((i/w.omega*dx)+w.headPosition);
@@ -54,7 +55,7 @@ void GUI::initWindow() {
       auto deltaTime = std::chrono::high_resolution_clock::now();
 
       // annimation loop
-      while (!closed) {
+      while (WAVE_CONT->running) {
 
           SDL_Event event;
 
@@ -64,7 +65,7 @@ void GUI::initWindow() {
 
               case SDL_QUIT:
                   // handling of close button
-                  closed = true;
+                  WAVE_CONT->running = false;
                   break;
               }
 
@@ -76,7 +77,7 @@ void GUI::initWindow() {
 
               case SDL_QUIT:
                   // handling of close button
-                  closed = true;
+                  WAVE_CONT->running = false;
                   break;
               }
 

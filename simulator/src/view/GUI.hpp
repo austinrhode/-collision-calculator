@@ -4,23 +4,23 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_timer.h>
-#include <model/vect.hpp>
 #include <model/wave.hpp>
-#include <vector>
+
+class waveController;
 
 class GUI {
 public:
-  GUI(const int WIDTH, const int HEIGHT, const int RESOLUTION):
+  GUI(const int WIDTH, const int HEIGHT, const int RESOLUTION, waveController* WAVE_CONT):
     WIDTH(WIDTH),
     HEIGHT(HEIGHT),
-    RESOLUTION(RESOLUTION)
+    RESOLUTION(RESOLUTION),
+    WAVE_CONT(WAVE_CONT)
   { }
   void initWindow();
-  std::vector<wave> waveList;
-  bool closed;
-private:
+  waveController* WAVE_CONT;
   const int HEIGHT;
   const int WIDTH;
+private:
   const int RESOLUTION;
   SDL_Renderer* rend;
   void drawRect(float x, float y, float width, float height, uint32_t color, uint8_t alpha);
