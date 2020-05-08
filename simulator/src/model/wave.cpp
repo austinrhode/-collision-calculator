@@ -1,4 +1,5 @@
 #include "wave.hpp"
+#include <cmath>
 
 float wave::calculate_height(float x){
   float dist = (headPosition-x);

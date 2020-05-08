@@ -100,13 +100,16 @@ void GUI::initWindow() {
 
           boat_rect.x = 320;
           boat_rect.y = height + 250;
-          //std::cout << boat_rect.y << std::endl;
+
           boat_rect.w = 32;
           boat_rect.h = 32;
 
           const SDL_Rect* p_boat_rect = &boat_rect;
+          const SDL_Point center = {32,32};
+          const SDL_RendererFlip flip = SDL_FLIP_NONE;
+          double angle = asin(height / boat_rect.w) * (180 / acos(-1));
 
-          SDL_RenderCopy(rend, boat_texture, NULL, p_boat_rect);
+          SDL_RenderCopyEx(rend, boat_texture, NULL, p_boat_rect, angle, &center, flip);
 
           drawWaves();
 
