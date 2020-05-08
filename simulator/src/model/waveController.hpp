@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <thread>
+#include <model/wave.hpp>
 
 class GUI;
 
