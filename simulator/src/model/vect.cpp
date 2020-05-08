@@ -18,22 +18,16 @@ log logger;
   }
 
   pbVector pbVector::operator +(pbVector &obj) {
-    pbVector result = pbVector(this->x + obj.x, this->y + obj.y);
-    //logger.log_vector_operation(*this, obj, "+", result);
-    return result;
-}
+    return pbVector(this->x + obj.x, this->y + obj.y);
+  }
 
-pbVector pbVector::operator -(pbVector &obj) {
-  return pbVector(this->x - obj.x, this->y - obj.y);
-}
+  pbVector pbVector::operator -(pbVector &obj) {
+    return pbVector(this->x - obj.x, this->y - obj.y);
+  }
 
-double pbVector::dot_product(pbVector &obj){
-  return this->x * obj.x + this->y * obj.y;
-}
-
-double pbVector::cross_product(pbVector &obj){
-  ;
-}
+  double pbVector::dot_product(pbVector &obj){
+    return (this->x * obj.x) + (this->y * obj.y);
+  }
 
   ostream& operator<<(ostream& os, const pbVector& obj)
 {
@@ -43,7 +37,7 @@ double pbVector::cross_product(pbVector &obj){
     return os;
 }
 
-  void pbVector::setVector(double x, double y){
+  void pbVector::set_vector(double x, double y){
     this->x = x;
     this->y = y;
   }
