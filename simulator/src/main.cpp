@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {
     waveController wc = waveController();
-    GUI myGUI = GUI(640, 480, 1, &wc);
+    GUI myGUI = GUI(640, 480, 3, &wc);
     wc.gui = &myGUI;
 
     wc.waveList.push_back(wave(0,    0.5, 20, 3, 2, 8));

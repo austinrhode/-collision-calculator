@@ -20,8 +20,8 @@ public:
   waveController* WAVE_CONT;
   const int HEIGHT;
   const int WIDTH;
-private:
   const int RESOLUTION;
+private:
   SDL_Renderer* rend;
   void drawRect(float x, float y, float width, float height, uint32_t color, uint8_t alpha);
   void drawWaves();

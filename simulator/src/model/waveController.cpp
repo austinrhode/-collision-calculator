@@ -8,9 +8,9 @@ void waveController::updateWaves() {
     else {
       for(int i = 0; i < waveList.size(); i++) {
         float headPos = waveList[i].headPosition;
-        if(headPos > gui->WIDTH || headPos < 0) {
-          if(headPos > gui->WIDTH) {
-            waveList[i].headPosition = gui->WIDTH;
+        if(headPos > gui->WIDTH/gui->RESOLUTION || headPos < 0) {
+          if(headPos > gui->WIDTH/gui->RESOLUTION) {
+            waveList[i].headPosition = gui->WIDTH/gui->RESOLUTION;
           } else {
             waveList[i].headPosition = 0;
           }

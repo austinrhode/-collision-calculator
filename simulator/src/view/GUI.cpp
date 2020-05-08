@@ -1,4 +1,6 @@
 #include "GUI.hpp"
+#include <model/wave.hpp>
+#include <model/wave.cpp>
 #include <chrono>
 #include <iostream>
 #include <cmath>
@@ -25,17 +27,17 @@ void GUI::drawWaves() {
   int alpha = 150;
   int phi = 200;
 
-  int dx = RESOLUTION;
-  for(int i = 0; i < WIDTH/dx; i++) {
+  for(int i = 0; i < WIDTH/RESOLUTION; i++) {
     float height = 0;
     for(wave w : WAVE_CONT->waveList) {
       float dist = (w.headPosition-i);
       float decay = dist > 0 ? -pow(w.decayBase, -dist/w.decayRate) : -pow(w.decayBase, dist/w.decayRate);
-      height += decay*w.amplitude*sin((i/w.omega*dx)+w.headPosition);
+      height += decay*w.amplitude*sin((i/w.omega*RESOLUTION)+w.headPosition);
     };
-    drawRect(float(i*dx),HEIGHT-height-phi,dx,HEIGHT-height, color, alpha);
+    drawRect(float(i*RESOLUTION),HEIGHT-height-phi,RESOLUTION,HEIGHT-height, color, alpha);
   }
 }
+
 
 void GUI::initWindow() {
 
@@ -47,6 +49,8 @@ void GUI::initWindow() {
 
       Uint32 render_flags = SDL_RENDERER_ACCELERATED;
       this->rend = SDL_CreateRenderer(win, -1, render_flags);
+      SDL_Surface* boat_surface = IMG_Load("./img/boats.png");
+      SDL_Texture* boat_texture = SDL_CreateTextureFromSurface(rend, boat_surface);
       //SDL_Surface* surface = IMG_Load("./img/bg.png");
       //SDL_Texture* tex = SDL_CreateTextureFromSurface(rend, surface);
 
@@ -86,7 +90,30 @@ void GUI::initWindow() {
           // clears the screen
           SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
           SDL_RenderClear(rend);
-          //SDL_RenderCopy(rend, tex, NULL, 0);
+
+          SDL_Rect boat_rect;
+
+          float height = 0;
+          float height_front = 0;
+          float height_back = 0;
+          for (int i = 0; i < WAVE_CONT->waveList.size(); i++){
+            height += WAVE_CONT->waveList[i].calculate_height(320 / RESOLUTION);
+            height_front += WAVE_CONT->waveList[i].calculate_height((320 + 16) / RESOLUTION);
+            height_back += WAVE_CONT->waveList[i].calculate_height((320 - 16) / RESOLUTION);
+          }
+
+          boat_rect.x = 320;
+          boat_rect.y = height + 250;
+
+          boat_rect.w = 32;
+          boat_rect.h = 32;
+
+          const SDL_Rect* p_boat_rect = &boat_rect;
+          const SDL_Point center = {32,16};
+          const SDL_RendererFlip flip = SDL_FLIP_NONE;
+          double angle = asin((height_front - height_back) / boat_rect.w) * (180 / acos(-1));
+
+          SDL_RenderCopyEx(rend, boat_texture, NULL, p_boat_rect, angle, &center, flip);
 
           drawWaves();
 
