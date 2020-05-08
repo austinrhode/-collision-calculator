@@ -95,10 +95,8 @@ void GUI::initWindow() {
 
           // calculates to 60 fps
           //SDL_Delay(1000 / 60);
-          SDL_Delay(1000 / 10);
+          SDL_Delay(1000 / 60);
       }
-
-      std::cout << this->closed << std::endl;
 
       //SDL_DestroyTexture(tex);
       SDL_DestroyRenderer(rend);
