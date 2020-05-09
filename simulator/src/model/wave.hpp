@@ -3,6 +3,7 @@
 
 class wave {
 public:
+  float calculate_height(float x);
   //this class assumes the wave follows the following equations
   //y=(A*sin(x/omega+time)*(decayBase)^(-decay))+phi
   //ex: y=(10sin((x/2)+4)*2^-3)+100
@@ -14,12 +15,12 @@ public:
     decayBase(decayBase),
     headPosition(headPosition)
     { }
-  const float velocity;
-  const float decayBase;
-  const float decayRate;
+  float velocity;
+  float decayBase;
+  float decayRate;
   float headPosition;
-  const float amplitude;
-  const float omega;
+  float amplitude;
+  float omega;
 };
 
 #endif

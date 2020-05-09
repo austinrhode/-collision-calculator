@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 #include <model/waveController.hpp>
+#include <model/rigid_body.hpp>
 
 void GUI::drawRect(float x, float y, float width, float height, uint32_t color, uint8_t alpha) {
   SDL_Rect rect;
