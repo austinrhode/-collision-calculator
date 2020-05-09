@@ -28,7 +28,7 @@ void GUI::drawWaves() {
   for(int i = 0; i < WIDTH/RESOLUTION; i++) {
     float height = 0;
     for(wave w : WAVE_CONT->waveList) {
-      height += w.calculate_height(i);
+      height += w.calculate_height(i*RESOLUTION);
     };
     drawRect(float(i*RESOLUTION),HEIGHT-height-phi,RESOLUTION,HEIGHT-height, color, alpha);
   }
@@ -71,31 +71,47 @@ void GUI::initWindow() {
       while (WAVE_CONT->running) {
           SDL_Event event;
           // Events mangement
+
+          int dir = 0;
+
           while (SDL_PollEvent(&event)) {
               switch (event.type) {
               case SDL_QUIT:
                   // handling of close button
                   WAVE_CONT->running = false;
                   break;
+              case SDL_KEYDOWN:
+                // keyboard API for key pressed
+                switch (event.key.keysym.scancode) {
+                  case SDL_SCANCODE_A:
+                  case SDL_SCANCODE_LEFT:
+                    dir = -1;
+                    break;
+                  case SDL_SCANCODE_D:
+                  case SDL_SCANCODE_RIGHT:
+                    dir = 1;
+                    break;
+
               }
+            }
           }
 
-          // Events mangement
-          while (SDL_PollEvent(&event)) {
-              switch (event.type) {
-              case SDL_QUIT:
-                  // handling of close button
-                  WAVE_CONT->running = false;
-                  break;
-              }
-          }
+          float maxVel = 2;
+          float accel = 1;
+          if(dir == 1 && WAVE_CONT->boatList[0].xVel < maxVel)
+            WAVE_CONT->boatList[0].xVel += accel;
+          if(dir == -1 && WAVE_CONT->boatList[0].xVel > -maxVel)
+            WAVE_CONT->boatList[0].xVel -= accel;
+          if(dir == 0 && WAVE_CONT->boatList[0].xVel != 0)
+            WAVE_CONT->boatList[0].xVel *= 0.97;
 
           // clears the screen
           SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
           SDL_RenderClear(rend);
           SDL_RenderCopy(rend, bg_texture, NULL, 0);
-          drawWaves();
+
           drawBoats();
+          drawWaves();
 
           // triggers the double buffers
           // for multiple rendering

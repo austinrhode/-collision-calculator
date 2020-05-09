@@ -14,10 +14,8 @@ int main()
     GUI myGUI = GUI(640, 480, 1, &wc);
     wc.gui = &myGUI;
 
-    //wc.waveList.push_back(wave(0,    0.1, 20, 20, 1, 8));
-    //wc.waveList.push_back(wave(0, 0, 20, 20, 1, 8));
-    wc.waveList.push_back(wave(170, -0.3, 10, 2, 2, 10));
-    wc.waveList.push_back(wave(0, 0.8, 10, 2, 2, 10));
+    wc.waveList.push_back(wave(200, 0.9, 10, 10, 2, 0.0005));
+    wc.waveList.push_back(wave(50, 1.2, 3, 2, 2, 0.0005));
 
     wc.boatList.push_back(boat(32,32,50,400,0));
     wc.boatList.push_back(boat(32,32,320,400,0));

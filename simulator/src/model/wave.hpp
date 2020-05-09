@@ -20,6 +20,7 @@ public:
   float headPosition;
   float amplitude;
   float omega;
+  float liveTime = 0;
   float calculate_height(float);
 };
 

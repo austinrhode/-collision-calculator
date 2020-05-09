@@ -1,5 +1,6 @@
 #include "waveController.hpp"
 #include <view/GUI.hpp>
+#include <iostream>
 
 void waveController::updateWorld() {
   while(running) {
@@ -14,17 +15,17 @@ void waveController::updateWorld() {
 
 void waveController::updateWaves() {
   for(int i = 0; i < waveList.size(); i++) {
-    float headPos = waveList[i].headPosition;
-    if(headPos > gui->WIDTH/gui->RESOLUTION || headPos < 0) {
-      if(headPos > gui->WIDTH/gui->RESOLUTION) {
-        waveList[i].headPosition = gui->WIDTH/gui->RESOLUTION;
+    if(waveList[i].headPosition > gui->WIDTH || waveList[i].headPosition < 0) {
+      if(waveList[i].headPosition > gui->WIDTH) {
+        waveList[i].headPosition = gui->WIDTH;
       } else {
         waveList[i].headPosition = 0;
       }
       waveList[i].velocity *= -0.8;
       waveList[i].amplitude *= 0.8;
-      waveList[i].omega *= 1.3;
+      //waveList[i].omega *= 1.3;
     }
+    waveList[i].liveTime+=1;
     waveList[i].headPosition += waveList[i].velocity;
   }
 }
@@ -39,7 +40,9 @@ void waveController::updateBoats() {
       height_front += w.calculate_height((boatList[i].xPos + (boatList[i].width/2)) / gui->RESOLUTION);
       height_back += w.calculate_height((boatList[i].xPos - (boatList[i].width/2)) / gui->RESOLUTION);
     }
-    boatList[i].yPos = height + phi + 1.5*boatList[i].height + boatList[i].yOffset;
+    boatList[i].yPos = gui->HEIGHT - (height + phi + 0.75*boatList[i].height + boatList[i].yOffset);
     boatList[i].angle = asin((height_front - height_back) / boatList[i].width) * (180 / acos(-1));
+
+    boatList[i].xPos += boatList[i].xVel;
   }
 }

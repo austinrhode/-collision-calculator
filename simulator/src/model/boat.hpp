@@ -15,6 +15,8 @@ public:
   float xPos;
   float yPos;
   float angle;
+  float xVel;
+  float yVel;
   const float yOffset = 3;
 };
 
