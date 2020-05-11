@@ -70,7 +70,14 @@ void autoStep(world& w) {
 			block* bW = &w.blocks[(row)*w.width + (col-1)];
 			block* bE = &w.blocks[(row)*w.width + (col+1)];
 
-			if(b->mass <= 0 || b->type == block::GROUND) continue;
+			//HELP ME
+			//if(b->mass <= 0 || b->type == block::GROUND) continue;
+			/*if(b->mass >= block::maxMass-2 && bN->mass <= block::maxMass) {
+				float avg = (bN->mass+b->mass)/2;
+				b->mass = avg;
+				bN->mass = avg;
+				continue;
+			}*/
 
 			//DOWN
 			if(b->mass > bS->mass && bS->mass < bS->maxMass && bS->type != block::GROUND) {
@@ -98,6 +105,7 @@ void autoStep(world& w) {
 				b->mass = avg;
 				bW->mass = avg;
 			}
+			//if(col == 12 && row == 4) printf("%f %d || %f %d \n", b->mass, b->type, bN->mass, bN->type);
 
 		}
 	}
@@ -112,6 +120,14 @@ void autoStep(world& w) {
 				w.blocks[row*w.width + col].mass = 0;
 			}
 		}
+	}
+
+	for(int col = 0; col < w.width; col++) {
+		w.blocks[ 0*w.width + col ].mass *= 0.5;
+	}
+	for(int row = 0; row < w.height; row++) {
+		w.blocks[ row*w.width + 0 ].mass *= 0;
+		w.blocks[ row*w.width + w.width-1 ].mass *= 0;
 	}
 
 	/*
