@@ -20,21 +20,6 @@ typedef struct _block {
 	constexpr static float minMass = 0.1;
 } block;
 
-/*typedef struct _world {
-	int width = 100;
-	int height = 100;
-	block *blocks = (block *) malloc((width+2) * (height+2) * sizeof(block));
-	_world() {
-		for(int col = 0; col < width+2; col++) {
-			*(blocks + col) = { .type=block::GROUND };
-			*(blocks + width*(height-1) + col) = { .type=block::GROUND };
-		}
-		for(int row = 0; row < height+2; row++) {
-			*(blocks + row*width) = { .type=block::GROUND };
-			*(blocks + (width-1) + row*width) = { .type=block::GROUND };
-		}
-	}
-} world;*/
 typedef struct _world {
 	int width=0;
 	int height=0;
@@ -64,9 +49,11 @@ typedef struct _world {
 		if((fptr = fopen(fileName, "r")) == NULL) {
 			printf("Error: FNFE\n");
 		} else {
-			for(int i = 0; i < totalCharCount; i++) {
+			for(int row = height-1; row > 0; row--)  {
+				for(int col = 0; col < width; col++) {
 					c = fgetc(fptr);
-					if(c == 'G') blocks[i] = { .type=block::GROUND };
+					if(c == 'G') blocks[row*width + col] = { .type=block::GROUND };
+				}
 			}
 		}
 		fclose(fptr);
@@ -118,12 +105,16 @@ void autoStep(world& w) {
 	//set correct ground type
 	for(int row = 1; row < w.height-1; row++)  {
 		for(int col = 1; col < w.width-1; col++) {
-			if(w.blocks[row*w.width + col].type == block::GROUND) continue;
+			if(w.blocks[row*w.width + col].type == block::GROUND) w.blocks[row*w.width + col].mass = 0;
 			if(w.blocks[row*w.width + col].mass > block::minMass) w.blocks[row*w.width + col].type = block::WATER;
-			else w.blocks[row*w.width + col].type = block::AIR;
+			if(w.blocks[row*w.width + col].mass <= block::minMass && w.blocks[row*w.width + col].type == block::WATER) {
+				w.blocks[row*w.width + col].type = block::AIR;
+				w.blocks[row*w.width + col].mass = 0;
+			}
 		}
 	}
 
+	/*
 	//remove any water that has left the map
 	for(int col = 0; col < w.width+2; col++) {
 		w.blocks[0 + col].type=block::GROUND;
@@ -136,7 +127,7 @@ void autoStep(world& w) {
 		w.blocks[row*w.width].mass=0;
 		w.blocks[row*w.width + w.width].type=block::GROUND;
 		w.blocks[row*w.width + w.width].mass=0;
-	}
+	}*/
 }
 
 void drawRect(float x, float y, float width, float height, uint32_t color, uint8_t alpha) {
@@ -177,14 +168,12 @@ void drawWorld(world& w, int scale) {
 			drawRect((col)*scale,(w.height-row-1)*scale,scale,scale,color,alpha);
 		}
 	}
-	//printf("\n");
 }
 
 int main() {
 
 	int scale = 10;
 	world w = world(strdup("tileMap.txt"));
-	printf("wooohoooo\n");
 
 	// retutns zero on success else non-zero
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
