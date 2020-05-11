@@ -20,9 +20,9 @@ typedef struct _block {
 	constexpr static float minMass = 0.1;
 } block;
 
-typedef struct _world {
-	static constexpr int width = 100;
-	static constexpr int height = 100;
+/*typedef struct _world {
+	int width = 100;
+	int height = 100;
 	block *blocks = (block *) malloc((width+2) * (height+2) * sizeof(block));
 	_world() {
 		for(int col = 0; col < width+2; col++) {
@@ -33,6 +33,43 @@ typedef struct _world {
 			*(blocks + row*width) = { .type=block::GROUND };
 			*(blocks + (width-1) + row*width) = { .type=block::GROUND };
 		}
+	}
+} world;*/
+typedef struct _world {
+	int width=0;
+	int height=0;
+	block* blocks;
+	_world(char* fileName) {
+		char c;
+		FILE *fptr;
+
+		int totalCharCount = 0;
+		if((fptr = fopen(fileName, "r")) == NULL) {
+			printf("Error: FNFE\n");
+		} else {
+			while((c = fgetc(fptr)) != EOF) {
+				if(c == '\n') {
+					height++;
+				} else {
+					totalCharCount++;
+				}
+			}
+			width=totalCharCount/height;
+		}
+		fclose(fptr);
+
+		width+=1;
+		blocks = (block *) malloc((width) * (height) * sizeof(block));
+
+		if((fptr = fopen(fileName, "r")) == NULL) {
+			printf("Error: FNFE\n");
+		} else {
+			for(int i = 0; i < totalCharCount; i++) {
+					c = fgetc(fptr);
+					if(c == 'G') blocks[i] = { .type=block::GROUND };
+			}
+		}
+		fclose(fptr);
 	}
 } world;
 
@@ -143,33 +180,11 @@ void drawWorld(world& w, int scale) {
 	//printf("\n");
 }
 
-/*void buildMap() {
-	int W=-1;
-	int H=-1;
-	char c;
-	FILE *fptr;
-	if((fptr = fopen("tileMap.txt", "r")) == NULL) {
-		printf("Error: FNFE\n");
-		return;
-	} else {
-		while((c = fgetc(fptr)) != EOF) {
-			if(W == -1) {
-				char line[16];
-				fscanf(fptr, "%[^\n]", line);
-				W=atoi(strtok(line, "x"));
-				H=atoi(strtok(NULL, "x"));
-			}
-			//else
-				//printf("%c",c);
-		}
-		fclose(fptr);
-	}
-}*/
-
 int main() {
 
-	int scale = 3;
-	world w;
+	int scale = 10;
+	world w = world(strdup("tileMap.txt"));
+	printf("wooohoooo\n");
 
 	// retutns zero on success else non-zero
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
