@@ -23,35 +23,28 @@ typedef struct _block {
 typedef struct _world {
 	static constexpr int width = 100;
 	static constexpr int height = 100;
-	block blocks[width+2][height+2];
+	block *blocks = (block *) malloc((width+2) * (height+2) * sizeof(block));
 	_world() {
 		for(int col = 0; col < width+2; col++) {
-			blocks[col][0] = { .type=block::GROUND };
-			blocks[col][width-1] = { .type=block::GROUND };
+			*(blocks + col) = { .type=block::GROUND };
+			*(blocks + width*(height-1) + col) = { .type=block::GROUND };
 		}
 		for(int row = 0; row < height+2; row++) {
-			blocks[0][row] = { .type=block::GROUND };
-			blocks[height-1][row] = { .type=block::GROUND };
+			*(blocks + row*width) = { .type=block::GROUND };
+			*(blocks + (width-1) + row*width) = { .type=block::GROUND };
 		}
 	}
 } world;
 
-void printWorld(world& w) {
-	for(int row = 0; row < w.height; row++)  {
-		for(int col = 0; col < w.width; col++) {
-			printf("%d ", w.blocks[row][col].type);
-		}
-		printf("\n");
-	}
-}
+
 void autoStep(world& w) {
 	for(int row = 1; row < w.height-1; row++)  {
 		for(int col = 1; col < w.width-1; col++) {
-			block* b  = &w.blocks[row][col];
-			block* bN = &w.blocks[row+1][col];
-			block* bS = &w.blocks[row-1][col];
-			block* bW = &w.blocks[row][col-1];
-			block* bE = &w.blocks[row][col+1];
+			block* b  = &w.blocks[row*w.width + col];
+			block* bN = &w.blocks[(row+1)*w.width + col];
+			block* bS = &w.blocks[(row-1)*w.width + col];
+			block* bW = &w.blocks[(row)*w.width + (col-1)];
+			block* bE = &w.blocks[(row)*w.width + (col+1)];
 
 			if(b->mass <= 0 || b->type == block::GROUND) continue;
 
@@ -88,24 +81,24 @@ void autoStep(world& w) {
 	//set correct ground type
 	for(int row = 1; row < w.height-1; row++)  {
 		for(int col = 1; col < w.width-1; col++) {
-			if(w.blocks[row][col].type == block::GROUND) continue;
-			if(w.blocks[row][col].mass > block::minMass) w.blocks[row][col].type = block::WATER;
-			else w.blocks[row][col].type = block::AIR;
+			if(w.blocks[row*w.width + col].type == block::GROUND) continue;
+			if(w.blocks[row*w.width + col].mass > block::minMass) w.blocks[row*w.width + col].type = block::WATER;
+			else w.blocks[row*w.width + col].type = block::AIR;
 		}
 	}
 
 	//remove any water that has left the map
 	for(int col = 0; col < w.width+2; col++) {
-		w.blocks[col][0].type=block::GROUND;
-		w.blocks[col][0].mass=0;
-		w.blocks[col][w.width-1].type=block::GROUND;
-		w.blocks[col][w.width-1].mass=0;
+		w.blocks[0 + col].type=block::GROUND;
+		w.blocks[0 + col].mass=0;
+		w.blocks[(w.height-1)*w.width + col].type=block::GROUND;
+		w.blocks[(w.height-1)*w.width + col].mass=0;
 	}
 	for(int row = 0; row < w.height+2; row++) {
-		w.blocks[0][row].type=block::GROUND;
-		w.blocks[0][row].mass=0;
-		w.blocks[w.height-1][row].type=block::GROUND;
-		w.blocks[w.height-1][row].mass=0;
+		w.blocks[row*w.width].type=block::GROUND;
+		w.blocks[row*w.width].mass=0;
+		w.blocks[row*w.width + w.width].type=block::GROUND;
+		w.blocks[row*w.width + w.width].mass=0;
 	}
 }
 
@@ -130,15 +123,15 @@ void drawWorld(world& w, int scale) {
 			uint32_t color;
 			float alpha = 255;
 
-			if(w.blocks[row][col].type == block::WATER) {
+			if(w.blocks[row*w.width + col].type == block::WATER) {
 				color = 0x0000FF;
-				float massInc = (w.blocks[row][col].mass/block::maxMass);
+				float massInc = (w.blocks[row*w.width + col].mass/block::maxMass);
 				float massOffset = 0.2;
 
 				alpha = ((massInc+massOffset)/(massOffset+1))*255;
 				//printf("%f ", alpha);
 			}
-			else if(w.blocks[row][col].type == block::AIR) {
+			else if(w.blocks[row*w.width + col].type == block::AIR) {
 				color = 0xFFFFFF;
 				alpha = 0;
 			}
@@ -150,7 +143,7 @@ void drawWorld(world& w, int scale) {
 	//printf("\n");
 }
 
-void buildMap() {
+/*void buildMap() {
 	int W=-1;
 	int H=-1;
 	char c;
@@ -171,13 +164,12 @@ void buildMap() {
 		}
 		fclose(fptr);
 	}
-}
+}*/
 
 int main() {
 
 	int scale = 3;
 	world w;
-	buildMap();
 
 	// retutns zero on success else non-zero
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
@@ -240,7 +232,9 @@ int main() {
 				  	}
 					}
 
-					if(mousedown) w.blocks[w.height-((event.motion.y)/scale)][event.motion.x/scale] = { .type=block::WATER, .mass=9 };
+					int my = w.height-((event.motion.y)/scale);
+					int mx = event.motion.x/scale;
+					if(mousedown) w.blocks[my*w.width + mx] = { .type=block::WATER, .mass=9 };
 
           // clears the screen
           SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
